@@ -3,233 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BioForge // Elite Metric Engine V2</title>
+    <title>BioForge // Crimson Protocol</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: radial-gradient(circle at top right, #0d1527, #070a12); }
-        .heading-font { font-family: 'Space Grotesk', sans-serif; }
-        .glass-panel { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.06); }
+        body { 
+            font-family: 'Rajdhani', sans-serif; 
+            background-color: #050505;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(220, 38, 38, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(153, 27, 27, 0.15) 0px, transparent 50%);
+            color: #e5e5e5;
+        }
+        .heading-font { font-family: 'Orbitron', sans-serif; }
+        .glass-panel { 
+            background: rgba(15, 15, 15, 0.6); 
+            backdrop-filter: blur(16px); 
+            border: 1px solid rgba(220, 38, 38, 0.15); 
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+        .neon-text {
+            color: #ef4444;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.5), 0 0 20px rgba(239, 68, 68, 0.3);
+        }
+        .neon-border:hover {
+            border-color: rgba(239, 68, 68, 0.8);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+        }
     </style>
 </head>
-<body class="text-slate-100 min-h-screen pb-12 selection:bg-cyan-500 selection:text-black">
+<body class="min-h-screen pb-12 selection:bg-red-600 selection:text-white">
 
-    <header class="border-b border-white/10 glass-panel sticky top-0 z-50 px-6 py-4 mb-8">
+    <!-- HEADER -->
+    <header class="border-b border-red-900/50 bg-black/80 sticky top-0 z-50 px-6 py-5 mb-8 backdrop-blur-md">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div>
-                <h1 class="text-2xl font-bold heading-font tracking-tight bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 bg-clip-text text-transparent">BIOFORGE OS</h1>
-                <p class="text-xs text-slate-400 uppercase tracking-widest">Personal Performance Matrix</p>
-            </div>
             <div class="flex items-center gap-4">
-                <div class="text-right">
-                    <p class="text-sm font-semibold" id="current-date-display"></p>
-                    <p class="text-xs text-cyan-400 font-mono tracking-wider uppercase" id="synergy-status">Analyzing Matrix...</p>
+                <div class="h-3 w-3 rounded-full bg-red-600 animate-pulse shadow-[0_0_10px_rgba(220,38,38,1)]"></div>
+                <div>
+                    <h1 class="text-3xl font-black heading-font tracking-widest text-white uppercase">Bio<span class="text-red-600">Forge</span></h1>
+                    <p class="text-xs text-red-500/70 uppercase tracking-[0.3em] font-bold">Crimson Protocol // Active</p>
                 </div>
-                <button onclick="tracker.resetDay()" class="px-4 py-2 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 rounded-xl text-xs font-semibold tracking-wider transition-all duration-300">
-                    RESET DAY
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="text-right hidden sm:block">
+                    <p class="text-lg font-bold" id="current-date-display"></p>
+                </div>
+                <button onclick="tracker.resetDay()" class="px-5 py-2 bg-red-950 hover:bg-red-900 border border-red-600/50 text-red-400 uppercase tracking-widest text-xs font-bold transition-all duration-300">
+                    Wipe Matrix
                 </button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 space-y-8">
         
-        <!-- ================= LEFT COLUMN: THE BRAIN MATRIX ================= -->
-        <section class="lg:col-span-6 space-y-6">
-            <div class="flex items-center gap-3">
-                <div class="h-2 w-2 rounded-full bg-cyan-400 animate-pulse"></div>
-                <h2 class="text-xl font-bold heading-font tracking-wide uppercase text-cyan-400">Cognitive Focus Engines</h2>
+        <!-- ================= TOP: THE MASTER SCHEDULE ================= -->
+        <section class="glass-panel p-6 rounded-none border-l-4 border-l-red-600">
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold heading-font tracking-widest text-white uppercase">Master Timetable</h2>
+                    <p class="text-sm text-red-400/80 uppercase tracking-wider mt-1">Execute The Daily Plan</p>
+                </div>
+            </div>
+            
+            <div class="flex gap-2 mb-6">
+                <input type="time" id="task-time" class="bg-black/50 border border-red-900/50 text-white px-3 py-2 focus:outline-none focus:border-red-500 font-mono">
+                <input type="text" id="task-desc" placeholder="E.g., Deep Focus: Physics Mechanics..." class="flex-1 bg-black/50 border border-red-900/50 text-white px-4 py-2 focus:outline-none focus:border-red-500 placeholder-zinc-600">
+                <button onclick="tracker.addTask()" class="px-6 bg-red-700 hover:bg-red-600 text-white font-bold tracking-wider uppercase transition-all">Add</button>
             </div>
 
-            <div id="subject-container" class="space-y-4">
-                <!-- Physics -->
-                <div class="glass-panel rounded-2xl p-6 transition-all duration-300 hover:border-white/10">
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400">Physics</span>
-                            <h3 class="text-lg font-medium text-slate-300 mt-2">Mechanics & Core Concepts</h3>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-3xl font-bold font-mono text-white" id="physics-display">0.0</span>
-                            <span class="text-xs text-slate-400 block">hours today</span>
-                        </div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="tracker.toggleTimer('physics')" id="btn-physics" class="flex-1 py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm tracking-wider transition-all duration-200">START FOCUS</button>
-                        <button onclick="tracker.manualAdd('physics', 0.5)" class="px-4 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl font-semibold text-sm border border-white/5 transition-all">+0.5h</button>
-                    </div>
-                </div>
-
-                <!-- Chemistry -->
-                <div class="glass-panel rounded-2xl p-6 transition-all duration-300 hover:border-white/10">
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-400">Chemistry</span>
-                            <h3 class="text-lg font-medium text-slate-300 mt-2">Organic & Physical Target</h3>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-3xl font-bold font-mono text-white" id="chemistry-display">0.0</span>
-                            <span class="text-xs text-slate-400 block">hours today</span>
-                        </div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="tracker.toggleTimer('chemistry')" id="btn-chemistry" class="flex-1 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm tracking-wider transition-all duration-200">START FOCUS</button>
-                        <button onclick="tracker.manualAdd('chemistry', 0.5)" class="px-4 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl font-semibold text-sm border border-white/5 transition-all">+0.5h</button>
-                    </div>
-                </div>
-
-                <!-- NEET -->
-                <div class="glass-panel rounded-2xl p-6 transition-all duration-300 hover:border-white/10">
-                    <div class="flex justify-between items-start mb-4">
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-400">NEET Focus</span>
-                            <h3 class="text-lg font-medium text-slate-300 mt-2">Biology & Mock Frameworks</h3>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-3xl font-bold font-mono text-white" id="neet-display">0.0</span>
-                            <span class="text-xs text-slate-400 block">hours today</span>
-                        </div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="tracker.toggleTimer('neet')" id="btn-neet" class="flex-1 py-3 rounded-xl bg-purple-500 hover:bg-purple-400 text-slate-950 font-bold text-sm tracking-wider transition-all duration-200">START FOCUS</button>
-                        <button onclick="tracker.manualAdd('neet', 0.5)" class="px-4 bg-white/5 hover:bg-white/10 text-slate-300 rounded-xl font-semibold text-sm border border-white/5 transition-all">+0.5h</button>
-                    </div>
-                </div>
+            <div id="schedule-list" class="space-y-2">
+                <!-- Tasks inject here via JS -->
             </div>
         </section>
 
-        <!-- ================= RIGHT COLUMN: THE BODY MATRIX ================= -->
-        <section class="lg:col-span-6 space-y-6">
-            <div class="flex items-center gap-3">
-                <div class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></div>
-                <h2 class="text-xl font-bold heading-font tracking-wide uppercase text-emerald-400">Kinetic & Athletic Logs</h2>
-            </div>
+        <!-- ================= SPLIT MATRIX ================= -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- LEFT: COGNITIVE OVERRIDE (STUDY) -->
+            <section class="space-y-5">
+                <h2 class="text-xl font-bold heading-font tracking-widest text-red-500 uppercase border-b border-red-900/30 pb-2">Cognitive Override</h2>
 
-            <!-- 4-Part Workout Grid -->
-            <div class="grid grid-cols-2 gap-4">
-                
-                <!-- Running -->
-                <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between">
-                    <div>
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Track</p>
-                        <h4 class="text-base font-bold text-white mt-1">Running</h4>
-                    </div>
-                    <div class="my-3 flex items-baseline gap-2">
-                        <span class="text-3xl font-bold font-mono text-emerald-400" id="running-display">0.0</span>
-                        <span class="text-xs text-slate-400">KM</span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-1">
-                        <button onclick="tracker.increment('running', 0.5)" class="py-1.5 bg-white/5 hover:bg-white/10 text-xs font-semibold rounded-lg">+0.5</button>
-                        <button onclick="tracker.increment('running', 1.0)" class="py-1.5 bg-white/5 hover:bg-white/10 text-xs font-semibold rounded-lg">+1.0</button>
-                        <button onclick="tracker.increment('running', 5.0)" class="py-1.5 bg-white/5 hover:bg-white/10 text-xs font-semibold rounded-lg">+5.0</button>
-                    </div>
-                </div>
-
-                <!-- Pushups -->
-                <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between">
-                    <div>
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Chest/Tris</p>
-                        <h4 class="text-base font-bold text-white mt-1">Push-ups</h4>
-                    </div>
-                    <div class="my-3 flex items-baseline gap-2">
-                        <span class="text-3xl font-bold font-mono text-emerald-400" id="pushups-display">0</span>
-                        <span class="text-xs text-slate-400">Reps</span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-1">
-                        <button onclick="tracker.increment('pushups', 10)" class="py-1.5 bg-white/5 hover:bg-white/10 text-xs font-semibold rounded-lg">+10</button>
-                        <button onclick="tracker.increment('pushups', 25)" class="py-1.5 bg-white/5 hover:bg-white/10 text-xs font-semibold rounded-lg">+25</button>
-                        <button onclick="tracker.increment('pushups', 50)" class="py-1.5 bg-white/5 hover:bg-white/10 text-xs font-semibold rounded-lg">+50</button>
-                    </div>
-                </div>
-
-                <!-- Pull-ups -->
-                <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between">
-                    <div>
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Back/Biceps</p>
-                        <h4 class="text-base font-bold text-white mt-1">Pull-ups</h4>
-                    </div>
-                    <div class="my-3 flex items-baseline gap-2">
-                        <span class="text-3xl font-bold font-mono text-emerald-400" id="pullups-display">0</span>
-                        <span class="text-xs text-slate-400">Reps</span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-1">
-                        <button onclick="tracker.increment('pullups', 1)" class="py-1.5 bg-white/5 hover:bg-white/10 text-xs font-semibold rounded-lg">+1</button>
-                        <button onclick="tracker.increment('pullups', 5)" class="py-1.5 bg-white/5 hover:bg-white/10 text-xs font-semibold rounded-lg">+5</button>
-                        <button onclick="tracker.increment('pullups', 10)" class="py-1.5 bg-white/5 hover:bg-white/10 text-xs font-semibold rounded-lg">+10</button>
-                    </div>
-                </div>
-
-                <!-- Squats -->
-                <div class="glass-panel rounded-2xl p-5 flex flex-col justify-between">
-                    <div>
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Legs/Core</p>
-                        <h4 class="text-base font-bold text-white mt-1">Squats</h4>
-                    </div>
-                    <div class="my-3 flex items-baseline gap-2">
-                        <span class="text-3xl font-bold font-mono text-emerald-400" id="squats-display">0</span>
-                        <span class="text-xs text-slate-400">Reps</span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-1">
-                        <button onclick="tracker.increment('squats', 10)" class="py-1.5 bg-white/5 hover:bg-white/10 text-xs font-semibold rounded-lg">+10</button>
-                        <button onclick="tracker.increment('squats', 25)" class="py-1.5 bg-white/5 hover:bg-white/10 text-xs font-semibold rounded-lg">+25</button>
-                        <button onclick="tracker.increment('squats', 50)" class="py-1.5 bg-white/5 hover:bg-white/10 text-xs font-semibold rounded-lg">+50</button>
-                    </div>
-                </div>
-
-                <!-- Hydration -->
-                <div class="glass-panel rounded-2xl p-5 col-span-2">
-                    <div class="flex justify-between items-center mb-3">
-                        <div>
-                            <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Hydration Matrix</p>
-                            <h4 class="text-base font-bold text-white mt-1">Water Intake</h4>
+                <div id="subject-container" class="space-y-4">
+                    <!-- Physics -->
+                    <div class="glass-panel p-5 neon-border transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-red-600"></div>
+                        <div class="flex justify-between items-center mb-4 pl-3">
+                            <div>
+                                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-red-500">Subject // 01</span>
+                                <h3 class="text-xl font-bold text-white mt-1 uppercase tracking-wide">Physics</h3>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-4xl font-bold font-mono neon-text" id="physics-display">0.0</span>
+                                <span class="text-xs text-zinc-500 block uppercase tracking-widest">Hours</span>
+                            </div>
                         </div>
-                        <div class="text-right">
-                            <span class="text-2xl font-bold font-mono text-blue-400" id="water-display">0</span>
-                            <span class="text-xs text-slate-400">/ 4000 ml</span>
+                        <div class="flex gap-2 pl-3">
+                            <button onclick="tracker.toggleTimer('physics')" id="btn-physics" class="flex-1 py-3 bg-red-950/50 hover:bg-red-900/80 border border-red-800/50 text-white font-bold tracking-widest uppercase transition-all duration-200">Engage</button>
+                            <button onclick="tracker.manualAdd('physics', 0.5)" class="px-4 bg-black/50 hover:bg-zinc-900 border border-red-900/30 text-zinc-400 font-bold transition-all">+0.5</button>
                         </div>
                     </div>
-                    <div class="w-full bg-white/5 rounded-full h-2 mb-4 overflow-hidden">
-                        <div id="water-progress" class="bg-gradient-to-r from-blue-500 to-cyan-400 h-full transition-all duration-500" style="width: 0%"></div>
-                    </div>
-                    <div class="flex gap-2">
-                        <button onclick="tracker.increment('water', 250)" class="flex-1 py-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 rounded-xl text-xs font-bold text-blue-400 tracking-wider transition-all">+250ml Glass</button>
-                        <button onclick="tracker.increment('water', 1000)" class="flex-1 py-2 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 rounded-xl text-xs font-bold text-cyan-400 tracking-wider transition-all">+1L Bottle</button>
-                    </div>
-                </div>
 
-                <!-- Calories -->
-                <div class="glass-panel rounded-2xl p-5 col-span-2 space-y-4">
-                    <div>
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Thermodynamics</p>
-                        <h4 class="text-base font-bold text-white mt-1">Energy Balance</h4>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-medium text-slate-400 uppercase mb-1">Calories Fuelled</label>
-                            <input type="number" id="input-fuel" oninput="tracker.updateCalories()" placeholder="0" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white font-mono focus:outline-none focus:border-emerald-500 transition-all">
+                    <!-- Chemistry -->
+                    <div class="glass-panel p-5 neon-border transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-orange-600"></div>
+                        <div class="flex justify-between items-center mb-4 pl-3">
+                            <div>
+                                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-orange-500">Subject // 02</span>
+                                <h3 class="text-xl font-bold text-white mt-1 uppercase tracking-wide">Chemistry</h3>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-4xl font-bold font-mono text-orange-500 drop-shadow-[0_0_8px_rgba(234,88,12,0.8)]" id="chemistry-display">0.0</span>
+                                <span class="text-xs text-zinc-500 block uppercase tracking-widest">Hours</span>
+                            </div>
                         </div>
-                        <div>
-                            <label class="block text-xs font-medium text-slate-400 uppercase mb-1">Calories Burned</label>
-                            <input type="number" id="input-burned" oninput="tracker.updateCalories()" placeholder="0" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white font-mono focus:outline-none focus:border-emerald-500 transition-all">
+                        <div class="flex gap-2 pl-3">
+                            <button onclick="tracker.toggleTimer('chemistry')" id="btn-chemistry" class="flex-1 py-3 bg-orange-950/30 hover:bg-orange-900/50 border border-orange-800/50 text-white font-bold tracking-widest uppercase transition-all duration-200">Engage</button>
+                            <button onclick="tracker.manualAdd('chemistry', 0.5)" class="px-4 bg-black/50 hover:bg-zinc-900 border border-red-900/30 text-zinc-400 font-bold transition-all">+0.5</button>
                         </div>
                     </div>
-                    <div class="pt-2 flex justify-between items-center border-t border-white/5">
-                        <span class="text-xs text-slate-400 uppercase font-semibold">Net Energy Delta:</span>
-                        <span id="calorie-delta-display" class="font-mono text-sm font-bold text-slate-300">0 kcal</span>
+
+                    <!-- NEET -->
+                    <div class="glass-panel p-5 neon-border transition-all duration-300 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-rose-600"></div>
+                        <div class="flex justify-between items-center mb-4 pl-3">
+                            <div>
+                                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-rose-500">Target // 03</span>
+                                <h3 class="text-xl font-bold text-white mt-1 uppercase tracking-wide">NEET Biology</h3>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-4xl font-bold font-mono text-rose-500 drop-shadow-[0_0_8px_rgba(225,29,72,0.8)]" id="neet-display">0.0</span>
+                                <span class="text-xs text-zinc-500 block uppercase tracking-widest">Hours</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 pl-3">
+                            <button onclick="tracker.toggleTimer('neet')" id="btn-neet" class="flex-1 py-3 bg-rose-950/30 hover:bg-rose-900/50 border border-rose-800/50 text-white font-bold tracking-widest uppercase transition-all duration-200">Engage</button>
+                            <button onclick="tracker.manualAdd('neet', 0.5)" class="px-4 bg-black/50 hover:bg-zinc-900 border border-red-900/30 text-zinc-400 font-bold transition-all">+0.5</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <!-- RIGHT: KINETIC MATRIX (FITNESS) -->
+            <section class="space-y-5">
+                <h2 class="text-xl font-bold heading-font tracking-widest text-red-500 uppercase border-b border-red-900/30 pb-2">Kinetic Output</h2>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Running -->
+                    <div class="glass-panel p-4 flex flex-col justify-between neon-border text-center">
+                        <p class="text-[10px] font-black text-red-500/80 uppercase tracking-widest mb-2">Track Output</p>
+                        <div class="my-2">
+                            <span class="text-4xl font-bold font-mono text-white" id="running-display">0.0</span>
+                            <span class="text-xs text-red-500 block mt-1 uppercase tracking-widest">KM</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1 mt-2">
+                            <button onclick="tracker.increment('running', 1.0)" class="py-2 bg-black/60 hover:bg-red-900/40 border border-red-900/30 text-xs font-bold uppercase transition-all">+1</button>
+                            <button onclick="tracker.increment('running', 5.0)" class="py-2 bg-black/60 hover:bg-red-900/40 border border-red-900/30 text-xs font-bold uppercase transition-all">+5</button>
+                        </div>
+                    </div>
+
+                    <!-- Pushups -->
+                    <div class="glass-panel p-4 flex flex-col justify-between neon-border text-center">
+                        <p class="text-[10px] font-black text-red-500/80 uppercase tracking-widest mb-2">Push-ups</p>
+                        <div class="my-2">
+                            <span class="text-4xl font-bold font-mono text-white" id="pushups-display">0</span>
+                            <span class="text-xs text-red-500 block mt-1 uppercase tracking-widest">Reps</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1 mt-2">
+                            <button onclick="tracker.increment('pushups', 20)" class="py-2 bg-black/60 hover:bg-red-900/40 border border-red-900/30 text-xs font-bold uppercase transition-all">+20</button>
+                            <button onclick="tracker.increment('pushups', 50)" class="py-2 bg-black/60 hover:bg-red-900/40 border border-red-900/30 text-xs font-bold uppercase transition-all">+50</button>
+                        </div>
+                    </div>
+
+                    <!-- Pull-ups -->
+                    <div class="glass-panel p-4 flex flex-col justify-between neon-border text-center">
+                        <p class="text-[10px] font-black text-red-500/80 uppercase tracking-widest mb-2">Pull-ups</p>
+                        <div class="my-2">
+                            <span class="text-4xl font-bold font-mono text-white" id="pullups-display">0</span>
+                            <span class="text-xs text-red-500 block mt-1 uppercase tracking-widest">Reps</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1 mt-2">
+                            <button onclick="tracker.increment('pullups', 5)" class="py-2 bg-black/60 hover:bg-red-900/40 border border-red-900/30 text-xs font-bold uppercase transition-all">+5</button>
+                            <button onclick="tracker.increment('pullups', 10)" class="py-2 bg-black/60 hover:bg-red-900/40 border border-red-900/30 text-xs font-bold uppercase transition-all">+10</button>
+                        </div>
+                    </div>
+
+                    <!-- Squats -->
+                    <div class="glass-panel p-4 flex flex-col justify-between neon-border text-center">
+                        <p class="text-[10px] font-black text-red-500/80 uppercase tracking-widest mb-2">Squats</p>
+                        <div class="my-2">
+                            <span class="text-4xl font-bold font-mono text-white" id="squats-display">0</span>
+                            <span class="text-xs text-red-500 block mt-1 uppercase tracking-widest">Reps</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1 mt-2">
+                            <button onclick="tracker.increment('squats', 25)" class="py-2 bg-black/60 hover:bg-red-900/40 border border-red-900/30 text-xs font-bold uppercase transition-all">+25</button>
+                            <button onclick="tracker.increment('squats', 50)" class="py-2 bg-black/60 hover:bg-red-900/40 border border-red-900/30 text-xs font-bold uppercase transition-all">+50</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <script>
         class BioForgeEngine {
             constructor() {
-                // Expanded state to include pullups and squats
-                this.state = { physics: 0, chemistry: 0, neet: 0, running: 0, pushups: 0, pullups: 0, squats: 0, water: 0, fuel: 0, burned: 0 };
+                this.state = { 
+                    physics: 0, chemistry: 0, neet: 0, 
+                    running: 0, pushups: 0, pullups: 0, squats: 0, 
+                    schedule: [] 
+                };
                 this.timers = {
                     physics: { active: false, intervalId: null, lastTimestamp: null },
                     chemistry: { active: false, intervalId: null, lastTimestamp: null },
@@ -240,27 +226,20 @@
 
             init() {
                 document.getElementById('current-date-display').innerText = new Date().toLocaleDateString('en-US', {
-                    weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
-                });
+                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+                }).toUpperCase();
 
-                const localData = localStorage.getItem('bioforge_matrix_data_v2');
+                const localData = localStorage.getItem('bioforge_crimson_data');
                 if (localData) {
                     try { this.state = { ...this.state, ...JSON.parse(localData) }; } 
                     catch(e) { console.error("Data error"); }
                 }
-                
-                this.syncInputs();
                 this.render();
             }
 
             saveState() {
-                localStorage.setItem('bioforge_matrix_data_v2', JSON.stringify(this.state));
+                localStorage.setItem('bioforge_crimson_data', JSON.stringify(this.state));
                 this.render();
-            }
-
-            syncInputs() {
-                document.getElementById('input-fuel').value = this.state.fuel || '';
-                document.getElementById('input-burned').value = this.state.burned || '';
             }
 
             increment(field, amount) {
@@ -273,14 +252,6 @@
                 this.saveState();
             }
 
-            updateCalories() {
-                const fuelValue = parseFloat(document.getElementById('input-fuel').value);
-                const burnedValue = parseFloat(document.getElementById('input-burned').value);
-                this.state.fuel = isNaN(fuelValue) ? 0 : fuelValue;
-                this.state.burned = isNaN(burnedValue) ? 0 : burnedValue;
-                this.saveState();
-            }
-
             toggleTimer(subject) {
                 const timerObj = this.timers[subject];
                 const btn = document.getElementById(`btn-${subject}`);
@@ -288,11 +259,9 @@
                 if (timerObj.active) {
                     clearInterval(timerObj.intervalId);
                     timerObj.active = false;
-                    timerObj.intervalId = null;
-                    timerObj.lastTimestamp = null;
                     
-                    btn.innerText = "START FOCUS";
-                    btn.className = btn.className.replace('bg-rose-500', '').replace('hover:bg-rose-400', '') + ` bg-${this.getSubjectColor(subject)}-500 hover:bg-${this.getSubjectColor(subject)}-400`;
+                    btn.innerText = "ENGAGE";
+                    btn.classList.remove('bg-white', 'text-black');
                 } else {
                     Object.keys(this.timers).forEach(key => {
                         if (this.timers[key].active) this.toggleTimer(key);
@@ -305,75 +274,81 @@
                         const now = Date.now();
                         const deltaMs = now - timerObj.lastTimestamp;
                         timerObj.lastTimestamp = now;
-                        
-                        const deltaHours = deltaMs / (1000 * 60 * 60);
-                        this.state[subject] = parseFloat((this.state[subject] + deltaHours).toFixed(4));
-                        
+                        this.state[subject] = parseFloat((this.state[subject] + (deltaMs / 3600000)).toFixed(4));
                         document.getElementById(`${subject}-display`).innerText = parseFloat(this.state[subject]).toFixed(1);
                     }, 1000);
 
-                    btn.innerText = "STOP FOCUS";
-                    btn.className = btn.className.replace(`bg-${this.getSubjectColor(subject)}-500`, '').replace(`bg-${this.getSubjectColor(subject)}-400`, '') + ' bg-rose-500 hover:bg-rose-400 text-white';
+                    btn.innerText = "ACTIVE // STOP";
+                    btn.classList.add('bg-white', 'text-black');
                 }
                 this.saveState();
             }
 
-            getSubjectColor(subject) {
-                if (subject === 'physics') return 'cyan';
-                if (subject === 'chemistry') return 'amber';
-                return 'purple';
+            // SCHEDULE ENGINE LOGIC
+            addTask() {
+                const timeStr = document.getElementById('task-time').value;
+                const descStr = document.getElementById('task-desc').value;
+                if (!timeStr || !descStr) return alert("Enter both Time and Mission details.");
+                
+                this.state.schedule.push({ id: Date.now(), time: timeStr, desc: descStr, done: false });
+                this.state.schedule.sort((a, b) => a.time.localeCompare(b.time));
+                
+                document.getElementById('task-time').value = '';
+                document.getElementById('task-desc').value = '';
+                this.saveState();
+            }
+
+            toggleTask(id) {
+                const task = this.state.schedule.find(t => t.id === id);
+                if(task) { task.done = !task.done; this.saveState(); }
+            }
+
+            deleteTask(id) {
+                this.state.schedule = this.state.schedule.filter(t => t.id !== id);
+                this.saveState();
             }
 
             resetDay() {
-                if(confirm("Wipe today's logs and restart?")) {
+                if(confirm("WIPE MATRIX? This resets all hours and reps to zero. Schedule will remain.")) {
                     Object.keys(this.timers).forEach(key => {
                         if (this.timers[key].active) this.toggleTimer(key);
                     });
-                    this.state = { physics: 0, chemistry: 0, neet: 0, running: 0, pushups: 0, pullups: 0, squats: 0, water: 0, fuel: 0, burned: 0 };
-                    this.syncInputs();
+                    this.state.physics = 0; this.state.chemistry = 0; this.state.neet = 0;
+                    this.state.running = 0; this.state.pushups = 0; this.state.pullups = 0; this.state.squats = 0;
+                    // Uncheck all schedule items
+                    this.state.schedule.forEach(t => t.done = false);
                     this.saveState();
                 }
             }
 
             render() {
-                // Update Brain Matrix
+                // Update trackers
                 document.getElementById('physics-display').innerText = parseFloat(this.state.physics).toFixed(1);
                 document.getElementById('chemistry-display').innerText = parseFloat(this.state.chemistry).toFixed(1);
                 document.getElementById('neet-display').innerText = parseFloat(this.state.neet).toFixed(1);
-                
-                // Update expanded Body Matrix
                 document.getElementById('running-display').innerText = parseFloat(this.state.running).toFixed(1);
                 document.getElementById('pushups-display').innerText = parseInt(this.state.pushups);
                 document.getElementById('pullups-display').innerText = parseInt(this.state.pullups);
                 document.getElementById('squats-display').innerText = parseInt(this.state.squats);
-                document.getElementById('water-display').innerText = parseInt(this.state.water);
 
-                const waterPct = Math.min(100, (this.state.water / 4000) * 100);
-                document.getElementById('water-progress').style.width = `${waterPct}%`;
-
-                const delta = this.state.fuel - this.state.burned;
-                const deltaEl = document.getElementById('calorie-delta-display');
-                if (delta >= 0) {
-                    deltaEl.innerText = `+${delta} kcal (Surplus)`;
-                    deltaEl.className = "font-mono text-sm font-bold text-emerald-400";
+                // Render Schedule
+                const list = document.getElementById('schedule-list');
+                list.innerHTML = '';
+                if(this.state.schedule.length === 0) {
+                    list.innerHTML = '<p class="text-zinc-600 text-sm font-mono uppercase mt-4">No directives set for today.</p>';
                 } else {
-                    deltaEl.innerText = `${delta} kcal (Deficit)`;
-                    deltaEl.className = "font-mono text-sm font-bold text-amber-400";
-                }
-
-                const totalStudy = this.state.physics + this.state.chemistry + this.state.neet;
-                const totalReps = this.state.pushups + this.state.pullups + this.state.squats;
-                const statusEl = document.getElementById('synergy-status');
-                
-                if (totalStudy === 0 && totalReps === 0) {
-                    statusEl.innerText = "SYSTEM ENGINE DORMANT";
-                    statusEl.className = "text-xs text-slate-400 font-mono tracking-wider uppercase";
-                } else if (totalStudy > 5 && totalReps > 100) {
-                    statusEl.innerText = "⚡ ELITE INTEGRATED PRODUCTION ACHIEVED";
-                    statusEl.className = "text-xs text-emerald-400 font-bold font-mono tracking-wider uppercase";
-                } else {
-                    statusEl.innerText = "🚀 OPERATIONAL FOCUS MODE RUNNING";
-                    statusEl.className = "text-xs text-cyan-400 font-mono tracking-wider uppercase";
+                    this.state.schedule.forEach(task => {
+                        const div = document.createElement('div');
+                        div.className = `flex justify-between items-center p-3 border-l-2 transition-all ${task.done ? 'border-zinc-800 bg-zinc-900/50 opacity-50' : 'border-red-600 bg-black/60'}`;
+                        div.innerHTML = `
+                            <div class="flex items-center gap-4 cursor-pointer flex-1" onclick="tracker.toggleTask(${task.id})">
+                                <span class="font-mono ${task.done ? 'text-zinc-600 line-through' : 'text-red-500 font-bold'}">${task.time}</span>
+                                <span class="${task.done ? 'text-zinc-600 line-through' : 'text-white'} font-bold tracking-wide">${task.desc}</span>
+                            </div>
+                            <button onclick="tracker.deleteTask(${task.id})" class="text-zinc-600 hover:text-red-500 px-2 font-black uppercase text-xs">Del</button>
+                        `;
+                        list.appendChild(div);
+                    });
                 }
             }
         }
