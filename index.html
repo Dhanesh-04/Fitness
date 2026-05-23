@@ -3,175 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BioForge // Clarity UI</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Dashboard // Premium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .card { background: white; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); }
-        .input-clean { border: 1px solid #e2e8f0; background: #f8fafc; transition: all 0.2s; }
-        .input-clean:focus { outline: none; border-color: #94a3b8; background: white; box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.1); }
+        body { font-family: 'Poppins', sans-serif; background-color: #f7f8fa; }
+        .sidebar { background-color: #1e222d; }
+        .blue-card { background-color: #3b5cd7; }
+        .soft-shadow { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03); }
+        /* Hide scrollbar for clean UI */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 10px; }
     </style>
 </head>
-<body class="text-slate-900 min-h-screen pb-12 antialiased selection:bg-blue-100 selection:text-blue-900">
+<body class="flex h-screen overflow-hidden text-[#111827]">
 
-    <!-- HEADER -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 px-6 py-4 mb-8 shadow-sm">
-        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div>
-                <h1 class="text-xl font-bold tracking-tight text-slate-900">BioForge <span class="text-slate-400 font-normal">Workspace</span></h1>
-            </div>
-            <div class="flex items-center gap-6">
-                <p class="text-sm font-medium text-slate-500" id="current-date-display"></p>
-                <button onclick="tracker.resetDay()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-lg transition-colors">
-                    Reset Day
-                </button>
-            </div>
+    <aside class="sidebar w-20 flex-shrink-0 flex flex-col items-center py-6 gap-8 z-20">
+        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center mb-4">
+            <i class="fa-solid fa-bolt text-[#1e222d] text-xl"></i>
         </div>
-    </header>
+        <nav class="flex flex-col gap-8 text-[#6b7280]">
+            <a href="#" class="text-white hover:text-white transition"><i class="fa-solid fa-border-all text-xl"></i></a>
+            <a href="#" class="hover:text-white transition"><i class="fa-solid fa-chart-simple text-xl"></i></a>
+            <a href="#" class="hover:text-white transition"><i class="fa-solid fa-envelope text-xl"></i></a>
+            <a href="#" class="hover:text-white transition"><i class="fa-solid fa-calendar text-xl"></i></a>
+            <a href="#" class="hover:text-white transition"><i class="fa-solid fa-file-lines text-xl"></i></a>
+        </nav>
+        <div class="mt-auto flex flex-col gap-8 text-[#6b7280]">
+            <a href="#" class="hover:text-white transition"><i class="fa-solid fa-gear text-xl"></i></a>
+            <a href="#" class="hover:text-white transition"><i class="fa-solid fa-arrow-right-from-bracket text-xl"></i></a>
+        </div>
+    </aside>
 
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 space-y-8">
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
         
-        <!-- MASTER SCHEDULE -->
-        <section class="card p-6">
-            <h2 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                Daily Schedule
-            </h2>
+        <header class="bg-white/80 backdrop-blur-md sticky top-0 z-10 px-8 py-5 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Dashboard</h1>
+            <div class="flex items-center gap-8">
+                <div class="relative hidden md:block">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" placeholder="Search for stats, tasks, etc" class="bg-gray-50 border border-gray-200 text-sm rounded-full pl-10 pr-4 py-2 w-72 focus:outline-none focus:border-blue-400">
+                </div>
+                <div class="flex items-center gap-4 text-gray-400">
+                    <i class="fa-regular fa-comment-dots text-xl hover:text-gray-700 cursor-pointer"></i>
+                    <div class="relative">
+                        <i class="fa-regular fa-bell text-xl hover:text-gray-700 cursor-pointer"></i>
+                        <div class="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border border-white"></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3 border-l pl-6">
+                    <img src="https://ui-avatars.com/api/?name=Akodar&background=3b5cd7&color=fff" alt="User" class="w-8 h-8 rounded-full">
+                    <span class="text-sm font-medium">Akodar <i class="fa-solid fa-chevron-down text-xs ml-1 text-gray-400"></i></span>
+                </div>
+            </div>
+        </header>
+
+        <div class="p-8 grid grid-cols-12 gap-6">
             
-            <div class="flex gap-3 mb-6">
-                <input type="time" id="task-time" class="input-clean rounded-lg px-3 py-2 text-sm font-medium text-slate-700">
-                <input type="text" id="task-desc" placeholder="E.g., Complete Physics NCERT Chapter 4..." class="input-clean flex-1 rounded-lg px-4 py-2 text-sm text-slate-900">
-                <button onclick="tracker.addTask()" class="px-5 bg-slate-900 hover:bg-slate-800 text-white font-medium rounded-lg text-sm transition-colors shadow-sm">Add Task</button>
+            <div class="col-span-12 xl:col-span-8 bg-white rounded-2xl p-6 soft-shadow">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="font-bold text-lg">Performance Output</h2>
+                    <div class="flex gap-4 text-xs font-medium text-gray-400">
+                        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-500"></span> Study Hrs</span>
+                        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-cyan-400"></span> Kinetic Load</span>
+                        <select class="bg-transparent border-none outline-none font-medium text-gray-600"><option>This Week</option></select>
+                    </div>
+                </div>
+                <div class="h-[220px] w-full">
+                    <canvas id="mainLineChart"></canvas>
+                </div>
             </div>
 
-            <div id="schedule-list" class="space-y-2"></div>
-        </section>
+            <div class="col-span-12 xl:col-span-4 grid grid-cols-2 gap-4">
+                <div class="bg-white rounded-2xl p-5 soft-shadow flex flex-col justify-center items-center text-center">
+                    <div class="w-12 h-12 rounded-full bg-orange-100 text-orange-500 flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-fire text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl" id="total-reps-display">0</h3>
+                    <p class="text-xs text-gray-400 mt-1">Total Reps</p>
+                </div>
+                <div class="bg-white rounded-2xl p-5 soft-shadow flex flex-col justify-center items-center text-center">
+                    <div class="w-12 h-12 rounded-full bg-green-100 text-green-500 flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-book-open text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl" id="total-study-display">0h</h3>
+                    <p class="text-xs text-gray-400 mt-1">Focus Time</p>
+                </div>
+                <div class="bg-white rounded-2xl p-5 soft-shadow flex flex-col justify-center items-center text-center">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center mb-3">
+                        <i class="fa-solid fa-droplet text-xl"></i>
+                    </div>
+                    <div class="flex items-baseline gap-1">
+                        <h3 class="font-bold text-xl" id="water-display">0</h3>
+                        <span class="text-xs font-bold text-gray-400">ml</span>
+                    </div>
+                    <p class="text-xs text-gray-400 mt-1">Hydration</p>
+                    <button onclick="tracker.increment('water', 250)" class="mt-2 text-[10px] bg-blue-50 text-blue-600 px-3 py-1 rounded-full font-semibold hover:bg-blue-100">+250ml</button>
+                </div>
+                <div class="bg-white rounded-2xl p-5 soft-shadow flex flex-col justify-center items-center text-center">
+                    <div class="w-8 h-8 rounded-full bg-red-100 text-red-500 flex items-center justify-center mb-2">
+                        <i class="fa-solid fa-heart-pulse text-sm"></i>
+                    </div>
+                    <button onclick="tracker.resetDay()" class="text-xs font-bold text-red-500 hover:text-red-700 border-b border-red-200 pb-1">Reset Matrix</button>
+                </div>
+            </div>
 
-        <!-- SPLIT MATRIX -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            
-            <!-- ACADEMICS (STUDY) -->
-            <section class="space-y-4">
-                <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">Deep Work Sessions</h2>
+            <div class="col-span-12 xl:col-span-3 bg-white rounded-2xl p-6 soft-shadow flex flex-col">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-bold text-sm">Study Overview</h2>
+                    <select class="text-xs text-gray-400 bg-transparent outline-none"><option>Today</option></select>
+                </div>
+                <div class="relative flex-1 flex justify-center items-center h-40">
+                    <canvas id="donutChart"></canvas>
+                    <div class="absolute inset-0 flex flex-col justify-center items-center pointer-events-none">
+                        <span class="text-xl font-bold text-[#111827]" id="donut-center-text">0%</span>
+                        <span class="text-[10px] text-gray-400">Target</span>
+                    </div>
+                </div>
+            </div>
 
-                <div id="subject-container" class="space-y-4">
-                    <!-- Physics -->
-                    <div class="card p-5 hover:border-blue-200 transition-colors">
-                        <div class="flex justify-between items-center mb-4">
+            <div class="col-span-12 xl:col-span-6 bg-white rounded-2xl p-6 soft-shadow">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-bold text-sm">Cognitive Focus Engines</h2>
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="border border-gray-100 rounded-xl p-4 text-center hover:shadow-md transition">
+                        <h3 class="font-bold text-sm text-gray-800">Physics</h3>
+                        <p class="text-[10px] text-gray-400 mb-3">Mechanics Focus</p>
+                        <div class="text-2xl font-bold text-[#3b5cd7] mb-3"><span id="physics-display">0.0</span><span class="text-xs text-gray-400 ml-1">h</span></div>
+                        <button onclick="tracker.toggleTimer('physics')" id="btn-physics" class="w-full py-1.5 text-xs font-semibold rounded text-[#3b5cd7] bg-blue-50 hover:bg-blue-100 transition">Start Focus</button>
+                        <button onclick="tracker.manualAdd('physics', 0.5)" class="text-[10px] text-gray-400 mt-2 hover:text-gray-600">+ Add 30m</button>
+                    </div>
+                    <div class="border border-gray-100 rounded-xl p-4 text-center hover:shadow-md transition">
+                        <h3 class="font-bold text-sm text-gray-800">Chemistry</h3>
+                        <p class="text-[10px] text-gray-400 mb-3">Organic & Physical</p>
+                        <div class="text-2xl font-bold text-amber-500 mb-3"><span id="chemistry-display">0.0</span><span class="text-xs text-gray-400 ml-1">h</span></div>
+                        <button onclick="tracker.toggleTimer('chemistry')" id="btn-chemistry" class="w-full py-1.5 text-xs font-semibold rounded text-amber-600 bg-amber-50 hover:bg-amber-100 transition">Start Focus</button>
+                        <button onclick="tracker.manualAdd('chemistry', 0.5)" class="text-[10px] text-gray-400 mt-2 hover:text-gray-600">+ Add 30m</button>
+                    </div>
+                    <div class="border border-gray-100 rounded-xl p-4 text-center hover:shadow-md transition">
+                        <h3 class="font-bold text-sm text-gray-800">NEET Biology</h3>
+                        <p class="text-[10px] text-gray-400 mb-3">Mock Frameworks</p>
+                        <div class="text-2xl font-bold text-emerald-500 mb-3"><span id="neet-display">0.0</span><span class="text-xs text-gray-400 ml-1">h</span></div>
+                        <button onclick="tracker.toggleTimer('neet')" id="btn-neet" class="w-full py-1.5 text-xs font-semibold rounded text-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition">Start Focus</button>
+                        <button onclick="tracker.manualAdd('neet', 0.5)" class="text-[10px] text-gray-400 mt-2 hover:text-gray-600">+ Add 30m</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-span-12 xl:col-span-3 blue-card rounded-2xl p-6 text-white relative overflow-hidden soft-shadow flex flex-col">
+                <div class="absolute -right-6 -top-6 w-24 h-24 bg-white opacity-10 rounded-full"></div>
+                <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-white opacity-5 rounded-full"></div>
+                
+                <h2 class="font-bold text-lg mb-1 relative z-10">Master Schedule</h2>
+                <p class="text-xs text-blue-200 mb-4 relative z-10">Daily Operations</p>
+                
+                <div class="flex gap-2 mb-4 relative z-10">
+                    <input type="time" id="task-time" class="bg-white/20 text-white border-none rounded p-1 text-xs w-20 focus:outline-none">
+                    <input type="text" id="task-desc" placeholder="Add task..." class="bg-white/20 placeholder-blue-200 text-white border-none rounded p-1 text-xs flex-1 focus:outline-none px-2">
+                    <button onclick="tracker.addTask()" class="bg-white text-blue-700 text-xs font-bold px-2 rounded"><i class="fa-solid fa-plus"></i></button>
+                </div>
+
+                <div class="flex-1 overflow-y-auto pr-1 custom-scrollbar relative z-10 space-y-2" id="schedule-list">
+                    </div>
+            </div>
+
+            <div class="col-span-12 xl:col-span-8 bg-white rounded-2xl p-6 soft-shadow">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-bold text-sm">Kinetic Activity Log</h2>
+                </div>
+                <div class="grid grid-cols-4 gap-4">
+                    <div class="bg-[#3b5cd7] text-white rounded-xl p-4 flex flex-col justify-between">
+                        <div class="flex justify-between items-start">
                             <div>
-                                <h3 class="text-base font-bold text-slate-900">Physics</h3>
-                                <p class="text-xs text-slate-500 mt-0.5">Focus Tracker</p>
+                                <h3 class="font-bold text-sm">Track Run</h3>
+                                <p class="text-[10px] text-blue-200">Distance</p>
                             </div>
-                            <div class="text-right">
-                                <span class="text-3xl font-bold tracking-tight text-blue-600" id="physics-display">0.0</span>
-                                <span class="text-xs font-medium text-slate-400 ml-1">hrs</span>
-                            </div>
+                            <i class="fa-solid fa-person-running text-xl opacity-50"></i>
                         </div>
-                        <div class="flex gap-2">
-                            <button onclick="tracker.toggleTimer('physics')" id="btn-physics" class="flex-1 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold rounded-lg text-sm transition-colors border border-blue-200">Start Session</button>
-                            <button onclick="tracker.manualAdd('physics', 0.5)" class="px-4 bg-slate-50 hover:bg-slate-100 text-slate-600 font-medium rounded-lg text-sm border border-slate-200 transition-colors">+30m</button>
+                        <div class="mt-4 flex items-end justify-between">
+                            <div><span class="text-2xl font-bold" id="running-display">0</span><span class="text-xs ml-1 opacity-80">km</span></div>
+                            <div class="flex gap-1">
+                                <button onclick="tracker.increment('running', 1)" class="w-6 h-6 bg-white/20 rounded flex items-center justify-center hover:bg-white/40 text-xs">+</button>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Chemistry -->
-                    <div class="card p-5 hover:border-indigo-200 transition-colors">
-                        <div class="flex justify-between items-center mb-4">
+                    <div class="border border-gray-100 rounded-xl p-4 flex flex-col justify-between hover:shadow-md transition">
+                        <div class="flex justify-between items-start">
                             <div>
-                                <h3 class="text-base font-bold text-slate-900">Chemistry</h3>
-                                <p class="text-xs text-slate-500 mt-0.5">Focus Tracker</p>
+                                <h3 class="font-bold text-sm text-gray-800">Push-ups</h3>
+                                <p class="text-[10px] text-gray-400">Chest/Tris</p>
                             </div>
-                            <div class="text-right">
-                                <span class="text-3xl font-bold tracking-tight text-indigo-600" id="chemistry-display">0.0</span>
-                                <span class="text-xs font-medium text-slate-400 ml-1">hrs</span>
+                            <div class="w-8 h-8 rounded-full overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=100&h=100&fit=crop" class="w-full h-full object-cover">
                             </div>
                         </div>
-                        <div class="flex gap-2">
-                            <button onclick="tracker.toggleTimer('chemistry')" id="btn-chemistry" class="flex-1 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-semibold rounded-lg text-sm transition-colors border border-indigo-200">Start Session</button>
-                            <button onclick="tracker.manualAdd('chemistry', 0.5)" class="px-4 bg-slate-50 hover:bg-slate-100 text-slate-600 font-medium rounded-lg text-sm border border-slate-200 transition-colors">+30m</button>
+                        <div class="mt-4 flex items-end justify-between">
+                            <div><span class="text-2xl font-bold text-gray-800" id="pushups-display">0</span><span class="text-xs ml-1 text-gray-400">reps</span></div>
+                            <button onclick="tracker.increment('pushups', 20)" class="text-xs font-bold text-[#3b5cd7] hover:underline">+20</button>
                         </div>
                     </div>
-
-                    <!-- NEET -->
-                    <div class="card p-5 hover:border-emerald-200 transition-colors">
-                        <div class="flex justify-between items-center mb-4">
+                    <div class="border border-gray-100 rounded-xl p-4 flex flex-col justify-between hover:shadow-md transition">
+                        <div class="flex justify-between items-start">
                             <div>
-                                <h3 class="text-base font-bold text-slate-900">NEET Biology</h3>
-                                <p class="text-xs text-slate-500 mt-0.5">Focus Tracker</p>
+                                <h3 class="font-bold text-sm text-gray-800">Pull-ups</h3>
+                                <p class="text-[10px] text-gray-400">Back/Biceps</p>
                             </div>
-                            <div class="text-right">
-                                <span class="text-3xl font-bold tracking-tight text-emerald-600" id="neet-display">0.0</span>
-                                <span class="text-xs font-medium text-slate-400 ml-1">hrs</span>
+                            <div class="w-8 h-8 rounded-full overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1598971484999-6934b60e65bc?w=100&h=100&fit=crop" class="w-full h-full object-cover">
                             </div>
                         </div>
-                        <div class="flex gap-2">
-                            <button onclick="tracker.toggleTimer('neet')" id="btn-neet" class="flex-1 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold rounded-lg text-sm transition-colors border border-emerald-200">Start Session</button>
-                            <button onclick="tracker.manualAdd('neet', 0.5)" class="px-4 bg-slate-50 hover:bg-slate-100 text-slate-600 font-medium rounded-lg text-sm border border-slate-200 transition-colors">+30m</button>
+                        <div class="mt-4 flex items-end justify-between">
+                            <div><span class="text-2xl font-bold text-gray-800" id="pullups-display">0</span><span class="text-xs ml-1 text-gray-400">reps</span></div>
+                            <button onclick="tracker.increment('pullups', 5)" class="text-xs font-bold text-[#3b5cd7] hover:underline">+5</button>
+                        </div>
+                    </div>
+                    <div class="border border-gray-100 rounded-xl p-4 flex flex-col justify-between hover:shadow-md transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-bold text-sm text-gray-800">Squats</h3>
+                                <p class="text-[10px] text-gray-400">Legs</p>
+                            </div>
+                            <div class="w-8 h-8 rounded-full overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=100&h=100&fit=crop" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <div class="mt-4 flex items-end justify-between">
+                            <div><span class="text-2xl font-bold text-gray-800" id="squats-display">0</span><span class="text-xs ml-1 text-gray-400">reps</span></div>
+                            <button onclick="tracker.increment('squats', 25)" class="text-xs font-bold text-[#3b5cd7] hover:underline">+25</button>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- KINETIC MATRIX (FITNESS) -->
-            <section class="space-y-4">
-                <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-2">Physical Output</h2>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <!-- Running -->
-                    <div class="card p-5 flex flex-col justify-between">
-                        <p class="text-sm font-bold text-slate-900">Track Run</p>
-                        <div class="my-3">
-                            <span class="text-3xl font-bold tracking-tight text-slate-800" id="running-display">0.0</span>
-                            <span class="text-xs font-medium text-slate-400 ml-1">km</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 mt-1">
-                            <button onclick="tracker.increment('running', 1.0)" class="py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 text-xs font-semibold rounded-md transition-colors">+1</button>
-                            <button onclick="tracker.increment('running', 5.0)" class="py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 text-xs font-semibold rounded-md transition-colors">+5</button>
-                        </div>
-                    </div>
-
-                    <!-- Pushups -->
-                    <div class="card p-5 flex flex-col justify-between">
-                        <p class="text-sm font-bold text-slate-900">Push-ups</p>
-                        <div class="my-3">
-                            <span class="text-3xl font-bold tracking-tight text-slate-800" id="pushups-display">0</span>
-                            <span class="text-xs font-medium text-slate-400 ml-1">reps</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 mt-1">
-                            <button onclick="tracker.increment('pushups', 20)" class="py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 text-xs font-semibold rounded-md transition-colors">+20</button>
-                            <button onclick="tracker.increment('pushups', 50)" class="py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 text-xs font-semibold rounded-md transition-colors">+50</button>
-                        </div>
-                    </div>
-
-                    <!-- Pull-ups -->
-                    <div class="card p-5 flex flex-col justify-between">
-                        <p class="text-sm font-bold text-slate-900">Pull-ups</p>
-                        <div class="my-3">
-                            <span class="text-3xl font-bold tracking-tight text-slate-800" id="pullups-display">0</span>
-                            <span class="text-xs font-medium text-slate-400 ml-1">reps</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 mt-1">
-                            <button onclick="tracker.increment('pullups', 5)" class="py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 text-xs font-semibold rounded-md transition-colors">+5</button>
-                            <button onclick="tracker.increment('pullups', 10)" class="py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 text-xs font-semibold rounded-md transition-colors">+10</button>
-                        </div>
-                    </div>
-
-                    <!-- Squats -->
-                    <div class="card p-5 flex flex-col justify-between">
-                        <p class="text-sm font-bold text-slate-900">Squats</p>
-                        <div class="my-3">
-                            <span class="text-3xl font-bold tracking-tight text-slate-800" id="squats-display">0</span>
-                            <span class="text-xs font-medium text-slate-400 ml-1">reps</span>
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 mt-1">
-                            <button onclick="tracker.increment('squats', 25)" class="py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 text-xs font-semibold rounded-md transition-colors">+25</button>
-                            <button onclick="tracker.increment('squats', 50)" class="py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 text-xs font-semibold rounded-md transition-colors">+50</button>
-                        </div>
-                    </div>
+            <div class="col-span-12 xl:col-span-4 bg-white rounded-2xl p-6 soft-shadow">
+                <div class="flex justify-between items-center mb-2">
+                    <h2 class="font-bold text-sm">Weekly Activity</h2>
                 </div>
-            </section>
+                <div class="h-32 w-full">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -180,7 +256,7 @@
             constructor() {
                 this.state = { 
                     physics: 0, chemistry: 0, neet: 0, 
-                    running: 0, pushups: 0, pullups: 0, squats: 0, 
+                    running: 0, pushups: 0, pullups: 0, squats: 0, water: 0,
                     schedule: [] 
                 };
                 this.timers = {
@@ -188,15 +264,13 @@
                     chemistry: { active: false, intervalId: null, lastTimestamp: null },
                     neet: { active: false, intervalId: null, lastTimestamp: null }
                 };
+                this.donutInstance = null;
                 this.init();
+                this.initCharts();
             }
 
             init() {
-                document.getElementById('current-date-display').innerText = new Date().toLocaleDateString('en-US', {
-                    weekday: 'long', month: 'short', day: 'numeric'
-                });
-
-                const localData = localStorage.getItem('bioforge_clarity_data');
+                const localData = localStorage.getItem('bioforge_v4_data');
                 if (localData) {
                     try { this.state = { ...this.state, ...JSON.parse(localData) }; } 
                     catch(e) { console.error("Data error"); }
@@ -205,8 +279,9 @@
             }
 
             saveState() {
-                localStorage.setItem('bioforge_clarity_data', JSON.stringify(this.state));
+                localStorage.setItem('bioforge_v4_data', JSON.stringify(this.state));
                 this.render();
+                this.updateDonutChart();
             }
 
             increment(field, amount) {
@@ -226,9 +301,8 @@
                 if (timerObj.active) {
                     clearInterval(timerObj.intervalId);
                     timerObj.active = false;
-                    
-                    btn.innerText = "Start Session";
-                    btn.className = `flex-1 py-2.5 bg-${this.getColor(subject)}-50 hover:bg-${this.getColor(subject)}-100 text-${this.getColor(subject)}-700 font-semibold rounded-lg text-sm transition-colors border border-${this.getColor(subject)}-200`;
+                    btn.innerText = "Start Focus";
+                    btn.className = `w-full py-1.5 text-xs font-semibold rounded transition ${this.getBtnColor(subject, false)}`;
                 } else {
                     Object.keys(this.timers).forEach(key => {
                         if (this.timers[key].active) this.toggleTimer(key);
@@ -243,18 +317,25 @@
                         timerObj.lastTimestamp = now;
                         this.state[subject] = parseFloat((this.state[subject] + (deltaMs / 3600000)).toFixed(4));
                         document.getElementById(`${subject}-display`).innerText = parseFloat(this.state[subject]).toFixed(1);
-                    }, 1000);
+                        this.updateDonutChart(); // Live update graph
+                    }, 2000);
 
-                    btn.innerText = "Stop Session";
-                    btn.className = `flex-1 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-lg text-sm transition-colors border border-slate-900 shadow-sm`;
+                    btn.innerText = "Active // Stop";
+                    btn.className = `w-full py-1.5 text-xs font-semibold rounded text-white transition ${this.getBtnColor(subject, true)}`;
                 }
                 this.saveState();
             }
 
-            getColor(subject) {
-                if (subject === 'physics') return 'blue';
-                if (subject === 'chemistry') return 'indigo';
-                return 'emerald';
+            getBtnColor(subject, active) {
+                if(active) {
+                    if (subject === 'physics') return 'bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/30';
+                    if (subject === 'chemistry') return 'bg-amber-500 hover:bg-amber-600 shadow-lg shadow-amber-500/30';
+                    return 'bg-emerald-500 hover:bg-emerald-600 shadow-lg shadow-emerald-500/30';
+                } else {
+                    if (subject === 'physics') return 'text-[#3b5cd7] bg-blue-50 hover:bg-blue-100';
+                    if (subject === 'chemistry') return 'text-amber-600 bg-amber-50 hover:bg-amber-100';
+                    return 'text-emerald-600 bg-emerald-50 hover:bg-emerald-100';
+                }
             }
 
             addTask() {
@@ -281,12 +362,12 @@
             }
 
             resetDay() {
-                if(confirm("Start fresh? Hours and reps will be zeroed. Your schedule items will remain but be unchecked.")) {
+                if(confirm("Start fresh? Hours and reps will be zeroed.")) {
                     Object.keys(this.timers).forEach(key => {
                         if (this.timers[key].active) this.toggleTimer(key);
                     });
                     this.state.physics = 0; this.state.chemistry = 0; this.state.neet = 0;
-                    this.state.running = 0; this.state.pushups = 0; this.state.pullups = 0; this.state.squats = 0;
+                    this.state.running = 0; this.state.pushups = 0; this.state.pullups = 0; this.state.squats = 0; this.state.water = 0;
                     this.state.schedule.forEach(t => t.done = false);
                     this.saveState();
                 }
@@ -300,32 +381,147 @@
                 document.getElementById('pushups-display').innerText = parseInt(this.state.pushups);
                 document.getElementById('pullups-display').innerText = parseInt(this.state.pullups);
                 document.getElementById('squats-display').innerText = parseInt(this.state.squats);
+                document.getElementById('water-display').innerText = parseInt(this.state.water);
 
+                const totalStudy = (this.state.physics + this.state.chemistry + this.state.neet).toFixed(1);
+                document.getElementById('total-study-display').innerText = totalStudy + 'h';
+                document.getElementById('total-reps-display').innerText = parseInt(this.state.pushups + this.state.pullups + this.state.squats);
+
+                // Target % logic for donut center
+                const targetHrs = 8;
+                let pct = Math.min(100, Math.round((totalStudy / targetHrs) * 100));
+                document.getElementById('donut-center-text').innerText = `+${pct}%`;
+
+                // Render Schedule
                 const list = document.getElementById('schedule-list');
                 list.innerHTML = '';
-                if(this.state.schedule.length === 0) {
-                    list.innerHTML = '<p class="text-slate-500 text-sm py-2">No tasks added yet.</p>';
-                } else {
-                    this.state.schedule.forEach(task => {
-                        const div = document.createElement('div');
-                        div.className = `flex justify-between items-center p-3 rounded-lg border transition-all ${task.done ? 'bg-slate-50 border-slate-200' : 'bg-white border-slate-200 shadow-sm'}`;
-                        div.innerHTML = `
-                            <div class="flex items-center gap-4 cursor-pointer flex-1" onclick="tracker.toggleTask(${task.id})">
-                                <div class="w-5 h-5 rounded border ${task.done ? 'bg-blue-500 border-blue-500 flex items-center justify-center' : 'border-slate-300'}">
-                                    ${task.done ? '<svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>' : ''}
-                                </div>
-                                <span class="font-medium text-sm ${task.done ? 'text-slate-400' : 'text-blue-600'} w-12">${task.time}</span>
-                                <span class="text-sm ${task.done ? 'text-slate-400 line-through' : 'text-slate-700 font-medium'}">${task.desc}</span>
+                this.state.schedule.forEach(task => {
+                    const div = document.createElement('div');
+                    div.className = `flex justify-between items-center bg-white/10 rounded p-2 text-xs transition ${task.done ? 'opacity-50' : ''}`;
+                    div.innerHTML = `
+                        <div class="flex items-center gap-3 flex-1 cursor-pointer" onclick="tracker.toggleTask(${task.id})">
+                            <i class="${task.done ? 'fa-solid fa-circle-check text-green-300' : 'fa-regular fa-circle text-blue-200'}"></i>
+                            <div>
+                                <span class="block font-bold ${task.done ? 'line-through text-blue-200' : 'text-white'}">${task.desc}</span>
+                                <span class="text-[10px] text-blue-200">${task.time}</span>
                             </div>
-                            <button onclick="tracker.deleteTask(${task.id})" class="text-slate-400 hover:text-red-500 p-1 transition-colors">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
-                            </button>
-                        `;
-                        list.appendChild(div);
-                    });
+                        </div>
+                        <i onclick="tracker.deleteTask(${task.id})" class="fa-solid fa-trash text-white/50 hover:text-red-300 cursor-pointer p-1"></i>
+                    `;
+                    list.appendChild(div);
+                });
+            }
+
+            initCharts() {
+                // Config to match the image curves exactly
+                Chart.defaults.font.family = "'Poppins', sans-serif";
+                Chart.defaults.color = '#9ca3af';
+
+                // 1. Main Line Chart (Mock Historical Data)
+                const lineCtx = document.getElementById('mainLineChart').getContext('2d');
+                new Chart(lineCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        datasets: [
+                            {
+                                label: 'Study Output',
+                                data: [30, 45, 40, 60, 55, 75, 65, 80, 70, 85, 90, 85],
+                                borderColor: '#3b5cd7',
+                                backgroundColor: 'rgba(59, 92, 215, 0.05)',
+                                borderWidth: 2,
+                                fill: true,
+                                tension: 0.4,
+                                pointRadius: 0
+                            },
+                            {
+                                label: 'Fitness Load',
+                                data: [50, 40, 55, 45, 60, 50, 65, 55, 70, 60, 75, 65],
+                                borderColor: '#22d3ee',
+                                borderWidth: 2,
+                                fill: false,
+                                tension: 0.4,
+                                pointRadius: 0
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { beginAtZero: true, border: { display: false }, grid: { color: '#f3f4f6' } },
+                            x: { border: { display: false }, grid: { display: false } }
+                        }
+                    }
+                });
+
+                // 2. Overview Donut Chart (Live Data connected to State)
+                const donutCtx = document.getElementById('donutChart').getContext('2d');
+                this.donutInstance = new Chart(donutCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Physics', 'Chemistry', 'Biology'],
+                        datasets: [{
+                            data: [0, 0, 0], // Starts empty, updated by render()
+                            backgroundColor: ['#3b5cd7', '#f59e0b', '#10b981'],
+                            borderWidth: 0,
+                            cutout: '75%'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false }, tooltip: { enabled: false } },
+                        animation: { duration: 500 }
+                    }
+                });
+
+                // 3. Mini Bar Chart (Mock Weekly Data)
+                const barCtx = document.getElementById('barChart').getContext('2d');
+                new Chart(barCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            data: [4, 6, 5, 8, 4, 7, 3],
+                            backgroundColor: '#3b5cd7',
+                            borderRadius: 4,
+                            barPercentage: 0.5
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { display: false },
+                            x: { border: { display: false }, grid: { display: false } }
+                        }
+                    }
+                });
+
+                this.updateDonutChart(); // Init with current state
+            }
+
+            updateDonutChart() {
+                if(this.donutInstance) {
+                    const p = this.state.physics;
+                    const c = this.state.chemistry;
+                    const n = this.state.neet;
+                    // If all zero, show a subtle gray placeholder ring
+                    if(p === 0 && c === 0 && n === 0) {
+                        this.donutInstance.data.datasets[0].data = [1];
+                        this.donutInstance.data.datasets[0].backgroundColor = ['#f3f4f6'];
+                    } else {
+                        this.donutInstance.data.datasets[0].data = [p, c, n];
+                        this.donutInstance.data.datasets[0].backgroundColor = ['#3b5cd7', '#f59e0b', '#10b981'];
+                    }
+                    this.donutInstance.update();
                 }
             }
         }
+        
         const tracker = new BioForgeEngine();
     </script>
 </body>
